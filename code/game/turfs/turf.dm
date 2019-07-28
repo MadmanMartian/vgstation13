@@ -67,6 +67,7 @@
 	var/image/viewblock
 
 	var/junction = 0
+
 /turf/examine(mob/user)
 	..()
 	if(bullet_marks)
@@ -117,11 +118,6 @@
 				mover.to_bump(obstacle, 1)
 				return 0
 	return 1
-
-/turf/Exited(atom/movable/Obj, atom/newloc)
-	.=..()
-	if(Obj.density)
-		densityChanged()
 
 /turf/Enter(atom/movable/mover as mob|obj, atom/forget as mob|obj|turf|area)
 	if (!mover)
@@ -184,8 +180,6 @@
 		return
 	if (!(src.can_border_transition))
 		return
-	if(A.density)
-		densityChanged()
 	if(ticker && ticker.mode)
 
 		// Okay, so let's make it so that people can travel z levels but not nuke disks!

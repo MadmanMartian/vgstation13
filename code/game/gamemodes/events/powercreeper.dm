@@ -63,6 +63,7 @@
 
 /obj/structure/cable/powercreeper/Destroy()
 	processing_objects.Remove(src)
+	updateNeighbours(TRUE)
 	..()
 
 /obj/structure/cable/powercreeper/process()
@@ -112,7 +113,6 @@
 /obj/structure/cable/powercreeper/proc/die()
 	grown = 0 //we can't attack or spread anymore
 	do_flick(src, "death[add_state]", 13)
-	updateNeighbours(TRUE)
 	qdel(src)
 
 /obj/structure/cable/powercreeper/proc/try_electrocution_turf(var/turf/T, var/checkdir)
@@ -164,16 +164,14 @@
 				P.growdirs |= get_dir(P, src)
 			else
 				P.growdirs &= ~get_dir(P, src)
-		var/area/A = get_area(T)
-		if(A)
-			if(dying)
-				A.on_turf_density_change.Remove(src)
-			else
-				A.on_turf_density_change.Add(src, "proxDensityChange")
+		if(dying)
+			T.on_density_change.Remove(src)
+		else
+			T.on_density_change.Add(src, "proxDensityChange")
+
 
 /obj/structure/cable/powercreeper/proc/proxDensityChange(var/list/args)
-	var/atom/A = args["atom"]
-	var/turf/T = get_turf(A)
+	var/turf/T = args["atom"]
 	if(get_dist(T, src) <= 1)
 		var/Adir = get_dir(src, T)
 		if(Adir in cardinal)

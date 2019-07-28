@@ -37,8 +37,9 @@
 		for(var/obj/machinery/atmospherics/pipe in update_later)
 			pipe.update_icon(1)
 
-/obj/machinery/atmospherics/pipe/singularity_pull(/obj/machinery/singularity/S, size)
+/obj/machinery/atmospherics/pipe/singularity_pull(var/obj/machinery/singularity/S, size)
 	return
+
 /obj/machinery/atmospherics/pipe/proc/pipeline_expansion()
 	return null
 

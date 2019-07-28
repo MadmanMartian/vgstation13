@@ -58,7 +58,7 @@
 	var/targetDestroyKey=null // Key for the on_destroyed listener.
 	var/targetDensityKey=null // Key for the on_density_change listener
 	var/targetContactLoc=null // Where we hit the target (used for target_moved)
-
+	var/locDensity=null       // Key for the turfs density_change listener
 	var/list/sources = list() // Whoever served in emitting this beam. Used in prisms to prevent infinite loops.
 	var/_re_emit = 1 // Re-Emit from master when deleted? Set to 0 to not re-emit.
 
@@ -66,6 +66,11 @@
 	..("sources", "children", args)
 	children = list()
 	sources = list()
+
+/obj/effect/beam/proc/turf_density_change(var/list/args)
+	var/turf/T = args["atom"]
+	var/atom/A = T.has_dense_content()
+	Crossed(A)
 
 // Listener for /atom/movable/on_moved
 /obj/effect/beam/proc/target_moved(var/list/args)
@@ -272,6 +277,9 @@
 		qdel(src)
 		return
 
+	var/turf/T = get_turf(src)
+	locDensity = T.on_density_change.Add(src, "turf_density_change")
+
 	if((x == 1 || x == world.maxx || y == 1 || y == world.maxy))
 		//BEAM_DEL(src)
 		beam_testing("\ref[src] end of world")
@@ -352,6 +360,9 @@
 					M.emitted_beams -= thing
 
 /obj/effect/beam/Destroy()
+	var/turf/T = get_turf(src)
+	if(T)
+		T.on_density_change.Remove(src)
 	var/obj/effect/beam/ourselves = src
 	var/obj/effect/beam/ourmaster = get_master()
 	if(target)
