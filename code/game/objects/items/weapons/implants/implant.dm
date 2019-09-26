@@ -11,6 +11,8 @@
 	var/allow_reagents = 0
 	var/malfunction = 0
 
+
+
 /obj/item/weapon/implant/proc/trigger(emote, source as mob)
 	return
 
@@ -23,6 +25,8 @@
 // return 1 if the implant succeeds (ex. Nonrevhead and loyalty implant.)
 /obj/item/weapon/implant/proc/implanted(var/mob/source)
 	return 1
+
+/obj/item/weapon/implant/proc/on_removal(mob/remover) //Called when the implant is removed
 
 /obj/item/weapon/implant/proc/get_data()
 	return "No information available"
@@ -107,7 +111,7 @@ Implant Specifics:<BR>"}
 	var/phrase = "supercalifragilisticexpialidocious"
 	icon_state = "implant_evil"
 
-	get_data()
+/obj/item/weapon/implant/explosive/get_data()
 		var/dat = {"
 <b>Implant Specifications:</b><BR>
 <b>Name:</b> Robust Corp RX-78 Intimidation Class Implant<BR>
@@ -305,9 +309,6 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	if(isrevnothead(H))
 		var/datum/role/R = H.mind.GetRole(REV)
 		R.Drop()
-	if(H.mind && H.mind.GetRole(IMPLANTSLAVE))
-		var/datum/role/R = H.mind.GetRole(IMPLANTSLAVE)
-		R.Drop()
 
 	to_chat(H, "<span class = 'notice'>You feel a surge of loyalty towards Nanotrasen.</span>")
 	return 1
@@ -319,7 +320,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	desc = "Greytide Station wide"
 	icon_state = "implant_evil"
 
-	get_data()
+/obj/item/weapon/implant/traitor/get_data()
 		var/dat = {"
 <b>Implant Specifications:</b><BR>
 <b>Name:</b> Greytide Mind-Slave Implant<BR>
@@ -373,6 +374,11 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	update_faction_icons()
 	log_admin("[ckey(user.key)] has mind-slaved [ckey(H.key)].")
 	return 1
+
+/obj/item/weapon/implant/traitor/on_removal(mob/remover)
+	if(imp_in.mind && imp_in.mind.GetRole(IMPLANTSLAVE))
+		var/datum/role/R = imp_in.mind.GetRole(IMPLANTSLAVE)
+		R.Drop()
 
 /obj/item/weapon/implant/adrenalin
 	name = "adrenalin implant"

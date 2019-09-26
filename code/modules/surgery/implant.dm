@@ -211,10 +211,12 @@
 		obj.forceMove(get_turf(target))
 		if(istype(obj,/obj/item/weapon/implant))
 			var/obj/item/weapon/implant/imp = obj
+			imp.on_removal(user)
 			imp.imp_in = null
 			imp.implanted = 0
 			affected.implants -= imp
 			target.contents -= imp
+
 	else if (affected.hidden)
 		user.visible_message("<span class='notice'>[user] takes something out of incision on [target]'s [affected.display_name] with \the [tool].</span>", \
 		"<span class='notice'>You take something out of incision on [target]'s [affected.display_name]s with \the [tool].</span>" )

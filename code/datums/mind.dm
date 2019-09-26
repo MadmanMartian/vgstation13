@@ -90,6 +90,12 @@
 		var/datum/role/R = antag_roles[role]
 		R.PreMindTransfer(current)
 
+	if(ishuman(current))
+		var/mob/living/carbon/human/H = current
+		for(var/obj/item/weapon/implant/IP in H)
+			if(IP.imp_in == H)
+				IP.on_removal(H)
+
 	if(current)					//remove ourself from our old body's mind variable
 		current.mind = null
 	if(new_character.mind)		//remove any mind currently in our new body's mind variable
@@ -110,6 +116,14 @@
 
 	if (hasFactionsWithHUDIcons())
 		update_faction_icons()
+
+
+
+	if(ishuman(new_character))
+		var/mob/living/carbon/human/H = new_character
+		for(var/obj/item/weapon/implant/IP in H)
+			if(IP.imp_in == H)
+				IP.implanted(H)
 
 /datum/mind/proc/transfer_to_without_current(var/mob/living/new_character)
 	new_character.attack_log += "\[[time_stamp()]\]: mind transfer from a body-less observer to [new_character]"
