@@ -18,17 +18,17 @@
 	if(message_type == COMSIG_ATTACKEDBY)
 		var/damage = args["damage"]
 		if(damage != 0)
-			if(damage > 0)
+			if(func_damage && damage > 0)
 				call(container.holder, func_damage)()
-			health=clamp(health+args["damage"], 0, max_health)
+			health=clamp(health-args["damage"], 0, max_health)
 			evaluate_health()
 
 /datum/component/damage_handler/proc/evaluate_health()
 	if(!dead)
-		if(health <= 0)
+		if(func_die && health <= 0)
 			call(container.holder, func_die)()
 			dead = TRUE
 	else
-		if(health > 0)
+		if(func_revive && health > 0)
 			call(container.holder, func_revive)()
 			dead = FALSE

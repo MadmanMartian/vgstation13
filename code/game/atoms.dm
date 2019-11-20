@@ -924,12 +924,17 @@ its easier to just keep the beam vertical.
 /atom/proc/setPersistenceAge()
 	return
 
-/atom/proc/register4damage(var/health, var/max_health, var/func_die, var/func_damage, var/func_death)
+/atom/proc/register4damage(var/health, var/max_health, var/func_death, var/func_damage, var/func_revive)
 	if(!CompContainer)
 		CompContainer = new(src)
 	var/datum/component/damage_handler/DH = CompContainer.AddComponent(/datum/component/damage_handler)
 	DH.health = health
 	DH.max_health = max_health
-	DH.func_die = func_die
+	DH.func_die = func_death
 	DH.func_damage = func_damage
-	DH.func_death = func_death
+	DH.func_revive = func_revive
+
+/atom/proc/take_damage(var/damage)
+	if(!CompContainer)
+		return
+	CompContainer.SendSignal(COMSIG_ATTACKEDBY, list("damage" = damage))
