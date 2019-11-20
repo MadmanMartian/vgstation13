@@ -8,6 +8,6 @@
 		var/assailant = args["assailant"]
 		var/damage_done = args["damage"]
 		for(var/mob/living/M in oview(7, container.holder))
-			if(!M.isUnconscious() || !M.BrainContainer || !(M in B.friends)) //THEY'RE ATTACKING OUR BOY, GET HIM!
+			if(!M.isUnconscious() || !M.CompContainer || !(M in B.friends)) //THEY'RE ATTACKING OUR BOY, GET HIM!
 				continue
-			M.BrainContainer.SendSignal(COMSIG_ATTACKEDBY, list("assailant"=assailant,"damage"=damage_done))
+			M.CompContainer.SendSignal(COMSIG_ATTACKEDBY, list("assailant"=assailant,"damage"=damage_done))

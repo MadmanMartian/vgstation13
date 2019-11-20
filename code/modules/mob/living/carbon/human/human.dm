@@ -1813,21 +1813,21 @@ mob/living/carbon/human/isincrit()
 	else return image(icon = 'icons/mob/attackanims.dmi', icon_state = "default")
 
 /mob/living/carbon/human/proc/initialize_barebones_NPC_components()	//doesn't actually do anything, but contains tools needed for other types to do things
-	BrainContainer = new (src)
-	BrainContainer.AddComponent(/datum/component/controller/mob)
-	BrainContainer.AddComponent(/datum/component/ai/hand_control)
-	BrainContainer.AddComponent(/datum/component/controller/movement/astar)
-	BrainContainer.register_for_updates()
+	CompContainer = new (src)
+	CompContainer.AddComponent(/datum/component/controller/mob)
+	CompContainer.AddComponent(/datum/component/ai/hand_control)
+	CompContainer.AddComponent(/datum/component/controller/movement/astar)
+	CompContainer.register_for_updates()
 
 /mob/living/carbon/human/proc/initialize_basic_NPC_components()	//will wander around
 	initialize_barebones_NPC_components()
-	BrainContainer.AddComponent(/datum/component/ai/human_brain)
-	BrainContainer.AddComponent(/datum/component/ai/target_finder/human)
-	BrainContainer.AddComponent(/datum/component/ai/target_holder/prioritizing)
-	BrainContainer.AddComponent(/datum/component/ai/melee/attack_human)
-	BrainContainer.AddComponent(/datum/component/ai/melee/throw_attack)
-	BrainContainer.AddComponent(/datum/component/ai/crowd_attack)
-	BrainContainer.AddComponent(pick(typesof(/datum/component/ai/targetting_handler)))
+	CompContainer.AddComponent(/datum/component/ai/human_brain)
+	CompContainer.AddComponent(/datum/component/ai/target_finder/human)
+	CompContainer.AddComponent(/datum/component/ai/target_holder/prioritizing)
+	CompContainer.AddComponent(/datum/component/ai/melee/attack_human)
+	CompContainer.AddComponent(/datum/component/ai/melee/throw_attack)
+	CompContainer.AddComponent(/datum/component/ai/crowd_attack)
+	CompContainer.AddComponent(pick(typesof(/datum/component/ai/targetting_handler)))
 
 /mob/living/carbon/human/can_show_flavor_text()
 	// Wearing a mask...

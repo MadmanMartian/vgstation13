@@ -185,23 +185,19 @@ var/MAX_EXPLOSION_RANGE = 14
 #define INVULNERABLE 8
 #define HEAR		16 // This flag is necessary to give an item (or mob) the ability to hear spoken messages! Mobs without a client still won't hear anything unless given HEAR_ALWAYS
 #define HEAR_ALWAYS 32 // Assign a virtualhearer to the mob even when no client is controlling it. (technically not an item flag, but related to the above)
-
 #define TWOHANDABLE	64
 #define MUSTTWOHAND	128
 #define SLOWDOWN_WHEN_CARRIED 256 //Apply slowdown when carried in hands, instead of only when worn
-
 #define NOBLOODY	512	// used to items if they don't want to get a blood overlay
-
 #define NO_ATTACK_MSG 	1024 // when an item has this it produces no "X has been hit by Y with Z" message with the default handler
 #define NO_THROW_MSG 	2048 // produce no "X has thrown Y" message when somebody throws this item
 #define NO_STORAGE_MSG 	4096 // produce no "X puts the Y into the backpack" message when somebody moves this item in their inventory
-
 #define OPENCONTAINER	8192  // is an open container for chemistry purposes
 #define	NOREACT 		16384 // Reagents don't react inside this container.
-
 #define TIMELESS		32768 // Immune to time manipulation.
-
 #define SILENTCONTAINER	65536 //reactions inside make no noise
+#define REGISTERFORDAMAGE	131072 //Whether an atom registers for damage on its New
+
 
 #define ALL ~0
 #define NONE 0

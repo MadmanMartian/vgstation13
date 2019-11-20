@@ -53,6 +53,8 @@ var/global/list/ghdel_profiling = list()
 
 	var/slowdown_modifier //modified on how fast a person can move over the tile we are on, see turf.dm for more info
 
+	var/datum/component_container/CompContainer
+
 /atom/proc/beam_connect(var/obj/effect/beam/B)
 	if(!last_beamchecks)
 		last_beamchecks = list()
@@ -191,6 +193,8 @@ var/global/list/ghdel_profiling = list()
 	on_destroyed = new("owner"=src)
 	on_density_change = new("owner"=src)
 	on_z_transition = new("owner"=src)
+	if(flags & (REGISTERFORDAMAGE))
+		register4damage()
 	. = ..()
 	AddToProfiler()
 
@@ -919,3 +923,13 @@ its easier to just keep the beam vertical.
 	return 1
 /atom/proc/setPersistenceAge()
 	return
+
+/atom/proc/register4damage(var/health, var/max_health, var/func_die, var/func_damage, var/func_death)
+	if(!CompContainer)
+		CompContainer = new(src)
+	var/datum/component/damage_handler/DH = CompContainer.AddComponent(/datum/component/damage_handler)
+	DH.health = health
+	DH.max_health = max_health
+	DH.func_die = func_die
+	DH.func_damage = func_damage
+	DH.func_death = func_death

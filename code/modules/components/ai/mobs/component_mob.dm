@@ -7,9 +7,9 @@
 
 /mob/living/component/New()
 	..()
-	BrainContainer = new (src)
+	CompContainer = new (src)
 	InitializeComponents()
-	BrainContainer.register_for_updates()
+	CompContainer.register_for_updates()
 
 /mob/living/component/proc/InitializeComponents()
 	// Set up components here

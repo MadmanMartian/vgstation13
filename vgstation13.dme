@@ -1412,6 +1412,7 @@
 #include "code\modules\components\ai\target_finders\target_finder.dm"
 #include "code\modules\components\ai\target_holders\prioritizing_holder.dm"
 #include "code\modules\components\ai\target_holders\target_holder.dm"
+#include "code\modules\components\generic\damage.dm"
 #include "code\modules\context_click\context_click.dm"
 #include "code\modules\context_click\remote.dm"
 #include "code\modules\credits\credit_disclaimers.dm"
