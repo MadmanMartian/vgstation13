@@ -14,8 +14,8 @@ var/global/list/reagents_to_always_log = list(AMUTATIONTOXIN, CYANIDE, CHEFSPECI
 	var/sharpness_flags = 0 //Describe in which way this thing is sharp. Shouldn't sharpness be exclusive to obj/item?
 	var/heat_production = 0
 	var/source_temperature = 0
-	var/price = 0
-
+	var/price = 0 //Used for setting player-stocked vending machines prices, vox trade probes automatically set this, set manually by the price tagger
+	var/export_value = 0 //Export value, how much cargo receives via the supply shuttle should this be sent back to central command
 	var/in_use = 0 // If we have a user using us, this will be set on. We will check if the user has stopped using us, and thus stop updating and LAGGING EVERYTHING!
 
 	var/damtype = "brute"
@@ -944,6 +944,9 @@ var/global/list/reagents_to_always_log = list(AMUTATIONTOXIN, CYANIDE, CHEFSPECI
 
 /obj/get_heat_conductivity() //So keeping something in a closet can have an insulating effect.
 	return 0.5
+
+/obj/proc/get_export_value()
+	return export_value
 
 //This subtype is used by stuff that should generally not be disturbed by those procs
 /obj/abstract

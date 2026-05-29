@@ -26,7 +26,7 @@ var/datum/subsystem/supply_shuttle/SSsupply_shuttle
 	//var/credits_per_plasma = 0.5 // 2 plasma for 1 point
 	//control
 	var/ordernum
-	var/list/centcomm_orders = list()
+	var/list/centcomm_orders = list() //The list of orders from central command
 	var/list/shoppinglist = list()
 	var/list/requestlist = list()
 	var/list/supply_packs = list()
@@ -169,6 +169,13 @@ var/datum/subsystem/supply_shuttle/SSsupply_shuttle
 	for(var/datum/centcomm_order/O in deferred_orders)
 		if(O.CheckShuttleObject(A,in_crate,preserve))
 			return
+
+	var/value = A.get_export_value()
+	if(value)
+		new /datum/transaction(cargo_acct,"Successful Export [A]", value, "",\
+												"Central Command Administration", send2PDAs = FALSE)
+		cargo_acct.money += value
+
 
 /datum/subsystem/supply_shuttle/proc/scrub()
 	for (var/obj/effect/decal/cleanable/C in cargo_shuttle.shuttle_contents())

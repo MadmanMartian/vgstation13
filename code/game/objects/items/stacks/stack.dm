@@ -397,3 +397,7 @@
 		amount += restock_amount
 	if(amount > max_amount)
 		amount = max_amount
+
+/obj/item/stack/get_export_value()
+	return value * amount
+
