@@ -1680,7 +1680,6 @@
 #include "code\modules\dna\genes\vg_powers.dm"
 #include "code\modules\Economy\Accounts.dm"
 #include "code\modules\Economy\AdminTools.dm"
-#include "code\modules\Economy\cargo_scanner.dm"
 #include "code\modules\Economy\debit_card.dm"
 #include "code\modules\Economy\EFTPOS.dm"
 #include "code\modules\Economy\Job_Departments.dm"
