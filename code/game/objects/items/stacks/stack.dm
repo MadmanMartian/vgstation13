@@ -399,5 +399,5 @@
 		amount = max_amount
 
 /obj/item/stack/get_export_value()
-	return value * amount
+	return export_value * amount
 
