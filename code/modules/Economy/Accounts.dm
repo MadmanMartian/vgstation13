@@ -483,14 +483,13 @@ var/init_station_funds = 0
 /obj/machinery/account_database/proc/charge_to_account(var/attempt_account_number, var/source_name, var/purpose, var/terminal_id, var/amount, var/target_name)
 	if(!activated || !attempt_account_number)
 		return 0
-	for(var/datum/money_account/D in all_money_accounts)
-		if(D.account_number == attempt_account_number)
-			D.money += amount
+	var/datum/money_account/D = get_account(attempt_account_number)
+	if(D != null)
+		D.money += amount
+		//create a transaction log entry
+		new /datum/transaction(D, purpose, "[abs(amount)]", terminal_id, source_name, source_name = target_name)
 
-			//create a transaction log entry
-			new /datum/transaction(D, purpose, "[abs(amount)]", terminal_id, source_name, source_name = target_name)
-
-			return 1
+		return 1
 
 	return 0
 
@@ -498,10 +497,10 @@ var/init_station_funds = 0
 /obj/machinery/account_database/proc/attempt_account_access(var/attempt_account_number, var/attempt_pin_number, var/security_level_passed = 0,var/pin_needed=1)
 	if(!activated || !attempt_account_number)
 		return 0
-	for(var/datum/money_account/D in all_money_accounts)
-		if(D.account_number == attempt_account_number)
-			if( D.security_level <= security_level_passed && (!D.security_level || D.remote_access_pin == attempt_pin_number || !pin_needed) )
-				return D
+	var/datum/money_account/D = get_account(attempt_account_number)
+	if(D != null)
+		if( D.security_level <= security_level_passed && (!D.security_level || D.remote_access_pin == attempt_pin_number || !pin_needed) )
+			return D
 
 /obj/machinery/account_database/proc/get_account(var/account_number)
 	if(!account_number)
